@@ -233,15 +233,6 @@ http://localhost:8080
 
 ---
 
-## 🖥️ Aperçu
-
-Une capture d'écran de l'application peut être ajoutée ici afin de présenter directement l'interface de la calculatrice.
-
-```text
-screenshots/calculatrice.png
-```
-
----
 
 ## 👨‍💻 Auteur
 
@@ -249,20 +240,3 @@ screenshots/calculatrice.png
 
 Projet réalisé dans le cadre de la pratique du développement **Java, Spring Boot, REST, JavaScript et JUnit**.
 
-````
-
-### ⚠️ Deux choses à vérifier avant de publier
-
-**1. `16 tests réussis`**
-
-Mets cette ligne uniquement si ton dernier :
-
-```bash
-mvn clean test
-````
-
-affiche bien :
-
-```text
-Tests run: 16, Failures: 0, Errors: 0
-```
