@@ -92,11 +92,10 @@ h1 em{
     align-items:start
 }
 .calculator{
-    background:#dfdfd6;
-    padding:23px;
-    border:1px solid #c3c4b9;
-    border-radius:12px;
-    box-shadow:0 5px 0 #c3c4b9,0 16px 26px #292b2710
+    background:#f8f6ef;
+    padding:16px;
+    border:1px solid var(--line);
+    border-radius:4px;
 }
 .device-header{
     display:flex;
@@ -118,21 +117,11 @@ h1 em{
     font:9px 'Courier New',monospace;
     letter-spacing:1px
 }
-.indicator:before{
-    content:'';
-    display:inline-block;
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:var(--orange);
-    margin-right:6px
-}
 .screen{
-    background:var(--screen);
-    border:1px solid #acb39b;
+    background:#fffdf8;
+    border:1px solid var(--line);
     border-radius:4px;
     padding:13px 14px 8px;
-    box-shadow:inset 0 2px 4px #292b2710
 }
 .screen label{
     font:9px 'Courier New',monospace;
@@ -143,7 +132,7 @@ h1 em{
     display:block;
     background:none;
     border:0;
-    border-bottom:1px solid #abb49b;
+    border-bottom:0;
     width:100%;
     border-radius:0;
     text-align:right;
@@ -171,16 +160,15 @@ h1 em{
 }
 .scientific-keys{
     padding:20px 0 15px;
-    border-bottom:1px solid #c1c2b6;
+    border-bottom:1px solid var(--line);
     margin-bottom:15px
 }
 .calculator button{
     border:1px solid #bfc0b4;
     border-radius:4px;
-    background:#d1d2c7;
+    background:#eeece4;
     color:var(--ink);
     min-height:38px;
-    box-shadow:0 2px 0 #b3b5a7
 }
 .keys button{
     min-height:48px;
@@ -191,9 +179,9 @@ h1 em{
     border-color:#d0d0c4
 }
 .keys .operator{
-    background:#343833;
-    color:#f5f3eb;
-    border-color:#343833
+    background:#e5e1d6;
+    color:var(--ink);
+    border-color:var(--line)
 }
 .keys .clear{
     color:var(--orange);
@@ -204,13 +192,9 @@ h1 em{
     background:var(--orange);
     color:white;
     border-color:#a53b1a;
-    box-shadow:0 2px 0 #873218
 }
 .calculator button:hover{
     filter:brightness(.95)
-}
-button:active{
-    transform:translateY(1px)
 }
 button:focus-visible,input:focus-visible,a:focus-visible{
     outline:2px solid var(--orange);
