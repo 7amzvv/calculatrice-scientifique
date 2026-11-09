@@ -17,6 +17,10 @@ public class ServiceCalculatrice {
             throw new IllegalArgumentException("L'expression ne peut pas être vide");
         }
 
+        if (expression.length() > 512) {
+            throw new IllegalArgumentException("Expression trop longue (512 caractères maximum)");
+        }
+
         Parser parser = new Parser(expression);
         double resultat = parser.parseExpression();
 
@@ -24,18 +28,12 @@ public class ServiceCalculatrice {
             throw new IllegalArgumentException("Expression invalide");
         }
 
+        if (!Double.isFinite(resultat)) {
+            throw new IllegalArgumentException("Résultat non défini ou trop grand");
+        }
         return resultat;
     }
 
-    /**
-     * Parser récursif permettant de respecter la priorité des opérateurs.
-     *
-     * Priorités :
-     * 1. Parenthèses et fonctions
-     * 2. Puissance ^
-     * 3. Multiplication et division
-     * 4. Addition et soustraction
-     */
     private static class Parser {
 
         private final String expression;
@@ -45,9 +43,6 @@ public class ServiceCalculatrice {
             this.expression = expression;
         }
 
-        /**
-         * Addition et soustraction.
-         */
         public double parseExpression() {
             double resultat = parseTerme();
 
@@ -70,23 +65,20 @@ public class ServiceCalculatrice {
             return resultat;
         }
 
-        /**
-         * Multiplication et division.
-         */
         private double parseTerme() {
-            double resultat = parsePuissance();
+            double resultat = parseSigne();
 
             while (position < expression.length()) {
                 char operateur = expression.charAt(position);
 
                 if (operateur == '*') {
                     position++;
-                    resultat *= parsePuissance();
+                    resultat *= parseSigne();
 
                 } else if (operateur == '/') {
                     position++;
 
-                    double droite = parsePuissance();
+                    double droite = parseSigne();
 
                     if (droite == 0) {
                         throw new ArithmeticException(
@@ -104,9 +96,6 @@ public class ServiceCalculatrice {
             return resultat;
         }
 
-        /**
-         * Puissance.
-         */
         private double parsePuissance() {
             double resultat = parseFacteur();
 
@@ -115,7 +104,7 @@ public class ServiceCalculatrice {
 
                 position++;
 
-                double exposant = parsePuissance();
+                double exposant = parseSigne();
 
                 resultat = Math.pow(resultat, exposant);
             }
@@ -123,28 +112,23 @@ public class ServiceCalculatrice {
             return resultat;
         }
 
-        /**
-         * Nombres, parenthèses et fonctions scientifiques.
-         */
+        private double parseSigne() {
+            if (position < expression.length() && expression.charAt(position) == '-') {
+                position++;
+                return -parseSigne();
+            }
+            if (position < expression.length() && expression.charAt(position) == '+') {
+                position++;
+                return parseSigne();
+            }
+            return parsePuissance();
+        }
+
         private double parseFacteur() {
 
             if (position >= expression.length()) {
                 throw new IllegalArgumentException("Expression invalide");
             }
-
-            // Gestion du signe -
-            if (expression.charAt(position) == '-') {
-                position++;
-                return -parseFacteur();
-            }
-
-            // Gestion du signe +
-            if (expression.charAt(position) == '+') {
-                position++;
-                return parseFacteur();
-            }
-
-            // Parenthèses
             if (expression.charAt(position) == '(') {
 
                 position++;
@@ -163,8 +147,6 @@ public class ServiceCalculatrice {
 
                 return resultat;
             }
-
-            // Fonctions scientifiques
             if (expression.startsWith("sqrt", position)) {
                 position += 4;
 
@@ -200,6 +182,9 @@ public class ServiceCalculatrice {
 
                 double valeur = parseFonction();
 
+                if (Math.abs(valeur % 180) == 90) {
+                    throw new IllegalArgumentException("Tangente non définie pour cet angle");
+                }
                 return Math.tan(Math.toRadians(valeur));
             }
 
@@ -222,14 +207,6 @@ public class ServiceCalculatrice {
             return parseNombre();
         }
 
-        /**
-         * Analyse l'argument d'une fonction.
-         *
-         * Exemple :
-         * sqrt(16)
-         * sin(0)
-         * log(100)
-         */
         private double parseFonction() {
 
             if (position >= expression.length()
@@ -257,9 +234,6 @@ public class ServiceCalculatrice {
             return resultat;
         }
 
-        /**
-         * Analyse un nombre décimal.
-         */
         private double parseNombre() {
 
             int debut = position;
@@ -294,16 +268,30 @@ public class ServiceCalculatrice {
                 );
             }
 
+            if (position < expression.length()
+                    && (expression.charAt(position) == 'e' || expression.charAt(position) == 'E')) {
+                position++;
+                if (position < expression.length()
+                        && (expression.charAt(position) == '+' || expression.charAt(position) == '-')) {
+                    position++;
+                }
+                int debutExposant = position;
+                while (position < expression.length() && Character.isDigit(expression.charAt(position))) {
+                    position++;
+                }
+                if (debutExposant == position) {
+                    throw new IllegalArgumentException("Exposant invalide");
+                }
+            }
+
             return Double.parseDouble(
                     expression.substring(debut, position)
             );
         }
 
-        /**
-         * Vérifie que toute l'expression a été analysée.
-         */
         public boolean estTermine() {
             return position == expression.length();
         }
     }
 }
+

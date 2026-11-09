@@ -1,16 +1,16 @@
 package com.calculatrice.service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+
 public class ServiceCalculatriceTest {
 
-    @Autowired
-    private ServiceCalculatrice serviceCalculatrice;
+
+    private final ServiceCalculatrice serviceCalculatrice = new ServiceCalculatrice();
 
     @Test
     public void testAddition() throws Exception {
@@ -101,4 +101,40 @@ public class ServiceCalculatriceTest {
     public void testNombresDecimaux() throws Exception {
         assertEquals(3.5, serviceCalculatrice.calculer("1.5+2.0"));
     }
-}
+    @Test
+    public void testPrioriteSigneEtPuissance() throws Exception {
+        assertEquals(-4.0, serviceCalculatrice.calculer("-2^2"));
+        assertEquals(4.0, serviceCalculatrice.calculer("(-2)^2"));
+        assertEquals(0.25, serviceCalculatrice.calculer("2^-2"));
+        assertEquals(512.0, serviceCalculatrice.calculer("2^3^2"));
+    }
+
+    @Test
+    public void testNotationScientifique() throws Exception {
+        assertEquals(2001.0, serviceCalculatrice.calculer("2e3+1"));
+        assertEquals(0.001, serviceCalculatrice.calculer("1.0E-3"));
+        assertThrows(IllegalArgumentException.class, () -> serviceCalculatrice.calculer("2e+"));
+    }
+
+    @Test
+    public void testResultatsNonFinis() {
+        for (String expression : new String[]{"ln(0)", "log(-1)", "10^1000", "(-1)^0.5"}) {
+            assertThrows(IllegalArgumentException.class, () -> serviceCalculatrice.calculer(expression));
+        }
+    }
+
+    @Test
+    public void testExpressionsInvalides() {
+        for (String expression : new String[]{"2+", "(2+3", "2..3", "sin 30", "2e", "1".repeat(513)}) {
+            assertThrows(IllegalArgumentException.class, () -> serviceCalculatrice.calculer(expression));
+        }
+    }
+    @Test
+    public void testTangenteNonDefinie() throws Exception {
+        assertEquals(1.0, serviceCalculatrice.calculer("tan(45)"), 0.000001);
+        for (String expression : new String[]{"tan(90)", "tan(-90)", "tan(270)"}) {
+            assertThrows(IllegalArgumentException.class, () -> serviceCalculatrice.calculer(expression));
+        }
+    }}
+
+
