@@ -1,242 +1,99 @@
-# Scientific Calculator 🧮
+# Atelier — Calculatrice scientifique
 
-Une calculatrice scientifique web moderne et fonctionnelle développée en Java avec Spring Boot.
+Une calculatrice web en Java 17 et Spring Boot, avec un moteur d’analyse d’expressions écrit à la main et une interface inspirée des instruments de bureau.
 
-**Auteur :** Fadli Hamza
-**Dates :** 13 - 15 juin 2026
-**Durée :** 2 jours
+Projet de **Fadli Hamza**.
 
----
+![Interface Atelier](docs/apercu.png)
 
-## 🎯 Présentation
+## Démarrer
 
-Scientific Calculator est une application web permettant d'effectuer des calculs mathématiques simples et scientifiques via une interface moderne, intuitive et entièrement responsive.
+Prérequis : JDK 17 ou supérieur et Maven 3.6 ou supérieur.
 
-L'application repose sur une architecture **frontend / backend** avec une séparation claire des responsabilités et une organisation inspirée des bonnes pratiques de développement.
-
----
-
-## 📋 Fonctionnalités
-
-### Opérations de base
-
-* ✅ Addition, soustraction, multiplication et division
-* ✅ Nombres entiers et décimaux
-* ✅ Gestion des parenthèses et respect de la priorité des opérateurs
-* ✅ Inverse (1/x)
-* ✅ Pourcentage
-* ✅ Puissance au carré (x²)
-* ✅ Puissance générale (x^n)
-
-### Fonctions scientifiques
-
-* ✅ Racine carrée (√x)
-* ✅ Trigonométrie : sin, cos, tan (en degrés)
-* ✅ Logarithme décimal : log₁₀
-* ✅ Logarithme népérien : ln
-
-### Interface
-
-* ✅ Affichage en temps réel
-* ✅ Historique des 10 derniers calculs
-* ✅ Design responsive (ordinateur, tablette et mobile)
-* ✅ Interface intuitive et boutons clairement organisés
-* ✅ Gestion des erreurs
-* ✅ Raccourcis clavier :
-
-  * Entrée → calcul (=)
-  * Échap → effacer (C)
-  * Retour arrière → supprimer (⌫)
-
-### Robustesse
-
-* ✅ Gestion des divisions par zéro
-* ✅ Gestion des racines carrées de nombres négatifs
-* ✅ Validation des expressions mathématiques
-* ✅ Messages d'erreur clairs
-
----
-
-## 🛠️ Technologies utilisées
-
-### Backend
-
-* **Java 17** : langage principal
-* **Spring Boot 3.3** : framework Java utilisé pour développer l'application web et l'API REST
-* **Maven 3.6+** : gestion des dépendances et automatisation du build
-* **JUnit 5** : tests automatisés
-
-### Frontend
-
-* **HTML5** : structure de l'interface
-* **CSS3** : mise en page, Flexbox, Grid, variables CSS et design responsive
-* **JavaScript ES6** : manipulation du DOM, communication avec l'API via Fetch API et gestion asynchrone avec async/await
-
-### Outils
-
-* **Git** : gestion de versions
-* **GitHub** : hébergement et partage du code source
-* **Maven** : compilation, tests et gestion du projet
-
----
-
-## 🏗️ Architecture
-
-### Architecture générale
-
-```text
-┌─────────────────────────────────────┐
-│              FRONTEND               │
-│                                     │
-│     HTML5 + CSS3 + JavaScript ES6   │
-│                                     │
-│       Interface utilisateur         │
-└──────────────────┬──────────────────┘
-                   │
-                   │ HTTP / JSON
-                   ▼
-┌─────────────────────────────────────┐
-│              BACKEND                │
-│                                     │
-│            Spring Boot              │
-│                                     │
-│  ┌───────────────────────────────┐  │
-│  │     CalculatriceController    │  │
-│  │           API REST             │  │
-│  └───────────────┬───────────────┘  │
-│                  │                  │
-│                  ▼                  │
-│  ┌───────────────────────────────┐  │
-│  │      ServiceCalculatrice      │  │
-│  │                               │  │
-│  │  • Calculs                    │  │
-│  │  • Priorité des opérateurs    │  │
-│  │  • Fonctions scientifiques    │  │
-│  │  • Gestion des erreurs        │  │
-│  └───────────────────────────────┘  │
-└──────────────────┬──────────────────┘
-                   │
-                   ▼
-              JUnit 5
-         Tests automatisés
-```
-
----
-
-## 📁 Structure du projet
-
-```text
-calculatrice-scientifique/
-│
-├── src/
-│   ├── main/
-│   │   ├── java/com/calculatrice/
-│   │   │   ├── controller/
-│   │   │   │   ├── CalculatriceController.java
-│   │   │   │   ├── CalculRequest.java
-│   │   │   │   └── CalculResponse.java
-│   │   │   │
-│   │   │   ├── service/
-│   │   │   │   └── ServiceCalculatrice.java
-│   │   │   │
-│   │   │   └── CalculatriceApplication.java
-│   │   │
-│   │   └── resources/
-│   │       ├── static/
-│   │       │   ├── index.html
-│   │       │   ├── style.css
-│   │       │   └── script.js
-│   │       └── application.properties
-│   │
-│   └── test/
-│       └── java/com/calculatrice/service/
-│           └── ServiceCalculatriceTest.java
-│
-├── pom.xml
-├── .gitignore
-└── README.md
-```
-
----
-
-## 🧪 Tests
-
-L'application dispose d'une suite de tests automatisés avec **JUnit 5**.
-
-Les tests couvrent notamment :
-
-* Addition
-* Soustraction
-* Multiplication
-* Division
-* Puissance
-* Racine carrée
-* Parenthèses
-* Priorité des opérateurs
-* Division par zéro
-* Racine carrée d'un nombre négatif
-* Expression vide
-* Fonctions trigonométriques
-* Logarithmes
-* Nombres décimaux
-
-### Exécuter les tests
-
-```bash
-mvn clean test
-```
-
-**Résultat :**
-
-```text
-✅ 16 tests automatisés
-✅ 16 tests réussis
-❌ 0 échec
-❌ 0 erreur
-```
-
----
-
-## 🚀 Installation
-
-### Prérequis
-
-* Java 17 ou version supérieure
-* Maven 3.6 ou version supérieure
-* Git
-
-### Cloner le projet
-
-```bash
+```sh
 git clone https://github.com/7amzvv/calculatrice-scientifique.git
-
 cd calculatrice-scientifique
-```
-
-### Lancer les tests
-
-```bash
-mvn clean test
-```
-
-### Lancer l'application
-
-```bash
+mvn test
 mvn spring-boot:run
 ```
 
-L'application sera ensuite accessible à l'adresse :
+Ouvrir http://localhost:8080. Le serveur Java est nécessaire aux calculs : ouvrir le fichier HTML seul ne suffit pas.
+
+## Utilisation
+
+Saisir une expression au clavier ou utiliser les touches. Entrée lance le calcul, Échap efface l’expression. Les boutons insèrent à la position du curseur et remplacent la sélection.
+
+| Expression | Résultat |
+| --- | --- |
+| `2+5*3` | `17` |
+| `(2+5)*3` | `21` |
+| `-2^2` | `-4` |
+| `(-2)^2` | `4` |
+| `2^-2` | `0.25` |
+| `2^3^2` | `512` |
+| `sqrt(81)+sin(30)` | environ `9.5` |
+| `2e3+1` | `2001` |
+
+Fonctions : `sqrt`, `sin`, `cos`, `tan`, `log` (base 10), `ln`. La trigonométrie utilise les **degrés**. Les appels nécessitent des parenthèses. Utiliser `.` comme séparateur décimal et `*` pour la multiplication : `2*(3+4)`.
+
+Les dix derniers calculs réussis sont conservés dans le stockage local du navigateur. Cliquer sur une ligne réutilise son résultat ; « Effacer » vide l’historique. Si le stockage est indisponible, l’historique reste utilisable pendant la session.
+
+## Architecture
+
+- `src/main/java/com/calculatrice/service/ServiceCalculatrice.java` : analyse et évaluation des expressions.
+- `src/main/java/com/calculatrice/controller/` : contrat JSON et endpoint REST.
+- `src/main/resources/static/` : interface HTML, CSS et JavaScript, sans dépendance frontend.
+- `src/test/java/com/calculatrice/service/ServiceCalculatriceTest.java` : tests unitaires du moteur, sans démarrage de Spring.
+
+Le navigateur transmet l’expression au serveur. Le service descend récursivement dans les règles de la grammaire, calcule le résultat, puis le contrôleur le renvoie en JSON. Aucun `eval` n’est utilisé.
+
+## Analyse des expressions
 
 ```text
-http://localhost:8080
+expression := terme (("+" | "-") terme)*
+terme      := signe (("*" | "/") signe)*
+signe      := ("+" | "-") signe | puissance
+puissance  := facteur ("^" signe)?
+facteur    := nombre | "(" expression ")" | fonction "(" expression ")"
 ```
 
----
+La puissance est associative à droite et prioritaire sur le signe unaire. Le moteur accepte les nombres en notation scientifique pour pouvoir réutiliser les résultats très petits ou très grands.
 
+Pour une expression de n caractères, l’analyse suit les caractères une seule fois : O(n) en temps, hors coût des fonctions mathématiques. La pile récursive peut occuper O(n) en mémoire. La longueur est limitée à 512 caractères après suppression des espaces.
 
-## 👨‍💻 Auteur
+## API
 
-**Fadli Hamza**
+`POST /api/calculator/calculate`, avec `Content-Type: application/json`.
 
-Projet réalisé dans le cadre de la pratique du développement **Java, Spring Boot, REST, JavaScript et JUnit**.
+Requête :
 
+```json
+{"expression":"2+5*3"}
+```
+
+Réponse réussie :
+
+```json
+{"result":17.0,"error":null}
+```
+
+Une expression refusée renvoie un objet avec `result: null` et un message `error`. Le contrat existant conserve le statut HTTP 200 pour ces erreurs de calcul.
+
+## Vérifications
+
+```sh
+mvn verify
+node --check src/main/resources/static/script.js
+```
+
+Les 21 tests du moteur couvrent les opérations, fonctions, priorités, signes, puissances imbriquées, notation scientifique, entrées invalides et résultats non finis. GitHub Actions exécute Maven avec Java 17.
+
+Vérifications manuelles : saisie et boutons, calcul par Entrée, erreurs dans l’écran, réutilisation d’un résultat, historique après rechargement et absence de débordement horizontal à petite largeur.
+
+## Choix visuels
+
+Le thème « atelier » utilise une surface ivoire, des touches graphite, un accent orange et un écran vert grisé. Référence : les calculatrices de Dietrich Lubs et Dieter Rams, notamment l’[ET 66 conservée au Museum Angewandte Kunst](https://sammlung-digital.museumangewandtekunst.de/detailpage/collection/8aaba9e5-2b9b-47ac-b304-11074467d180). L’interface est réalisée en CSS, sans image ni police distante.
+
+## Limites
+
+Les calculs utilisent des `double` : certains résultats comportent des approximations binaires. Les nombres complexes, constantes symboliques, multiplications implicites et pourcentages ne sont pas pris en charge. Les divisions par zéro, logarithmes hors domaine, racines négatives, tangentes aux angles non définis et résultats non finis sont refusés.
