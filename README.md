@@ -16,7 +16,7 @@ Projet de **Fadli Hamza**, développé en Java avec Spring Boot, HTML, CSS et Ja
 - Historique des 10 derniers calculs, conservé dans le navigateur.
 - Messages d’erreur pour les calculs impossibles ou les expressions incorrectes.
 
-L’interface garde un fond crème et des boutons simples, sans effet de relief.
+L’interface garde un fond crème et les textes de présentation. Le calcul se fait dans un champ de saisie classique, avec de petits boutons simples et l’historique en dessous.
 
 ## Lancer le projet
 
